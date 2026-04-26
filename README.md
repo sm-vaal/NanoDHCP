@@ -24,6 +24,8 @@ Clone this repo, and run the `./build-dhcp` shell script. This will compile the 
 
 Then, to run, `cd /build` and `[sudo] java NanoDHCP [options]`.
 
+If you don't want to build it, there is a .jar in the releases page. Download it and run `[sudo] java -jar NanoDHCP.jar [options]`
+
 
 ### The "WHY IS THERE CODE??? MAKE A \*\*\*\*\*\* .EXE FILE AND GIVE IT TO ME" way
 If none of what you read before makes sense to you, go to the releases page and download the pre-built executable for your OS. You don't even need a JRE: **boom, zero setup**. Can't fight that huh?
