@@ -48,7 +48,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: NanoDHCP-Linux
-          path: nanodhcp
+          path: NanoDHCP
 
       - name: Upload Windows Artifact
         if: runner.os == 'Windows'
