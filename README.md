@@ -26,7 +26,7 @@ Then, to run, `cd /build` and `[sudo] java NanoDHCP [options]`.
 
 
 ### The "WHY IS THERE CODE??? MAKE A \*\*\*\*\*\* .EXE FILE AND GIVE IT TO ME" way
-If none of what you read before makes sense to you, go to the releases page and download the pre-built executable for your OS. They are built with a minimal JVM included, so you don't even need a JRE. **Boom, zero setup**. Can't fight that huh?
+If none of what you read before makes sense to you, go to the releases page and download the pre-built executable for your OS. You don't even need a JRE: **boom, zero setup**. Can't fight that huh?
 
 #### A note on running this on Windows
 Windows fights you along the way if you want to run this, it _really_ likes to hog port 67. Be warned!
