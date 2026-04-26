@@ -43,6 +43,13 @@ jobs:
       - name: Build Native Image
         run: native-image --no-fallback -jar NanoDHCP.jar
 
+      - name: Upload JAR Artifact
+        if: runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: NanoDHCP-JAR
+          path: NanoDHCP.jar
+
       - name: Upload Linux Artifact
         if: runner.os == 'Linux'
         uses: actions/upload-artifact@v4
@@ -55,8 +62,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: NanoDHCP-Windows
-<<<<<<< HEAD
           path: NanoDHCP.exe
-=======
-          path: NanoDHCP.exe
->>>>>>> 33c78862c6e3572ecdfae9d5428bbff340452f0a
