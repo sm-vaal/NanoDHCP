@@ -1,7 +1,7 @@
 package Common;
 
 public class Log {
-    // I'm aware of existing stuff for this. A bit useless indeed
+    // I'm aware of existing stuff for this.
 
     public static int LOG_ALL     = 4; // all includes basically all info
     public static int LOG_INFO    = 3;

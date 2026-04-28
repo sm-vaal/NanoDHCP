@@ -26,6 +26,10 @@ public class Args {
 
     public String targetInterface;
 
+    public String servPxe;
+    public int[] servPxeIP;
+    public String filePxe;
+
     // constructor that parses the arguments
     public Args(String[] arguments) {
 
@@ -171,6 +175,31 @@ public class Args {
                 }
             }
 
+            // NOTE: it assumes everything is correct
+            else if (arg.equals("--pxe")) {
+                if (i + 2 >= arguments.length) {
+                    Log.log(Log.LOG_ERROR, "--pxe requires TFTP server ip and filename");
+                    errorsFound = true;
+                    break;
+                } else {
+                    servPxe = arguments[i+1];
+                    filePxe = arguments[i+2];
+                    i+=2;
+                    networkConfigChanged = true;
+
+                    try {
+                        servPxeIP = IP.parseIP(servPxe);
+                    } catch (IllegalArgumentException e) {
+                        Log.log(Log.LOG_WARNING, "Warning for PXE: address resolution not implemented. For non-UEFI systems, enter server IP");
+                        servPxeIP = null;
+                    }
+                    
+                    if (filePxe.length() > 128) {
+                        Log.log(Log.LOG_WARNING, "Warning: PXE boot filename exceeds 128 chars. May not work on non-UEFI systems.");
+                    }
+                }
+            }
+
             else if (arg.equals("--verbose"))     verbose       = true;
 
             // if the argument is invalid
@@ -223,10 +252,11 @@ public class Args {
     public static void showUsage() {
         System.out.println(
             "Usage:\n" +
-            "[sudo] java NanoDHCP [ --help           | --force-port <n>        | --range <ip1> <ip2> |\n" +
-            "                       --mask <m>       | --sniff-only            | --show-ip           |\n" +
-            "                       --gateway <ip>   | --dns <ip>              | --lease-time <sec>  |\n" +
-            "                       --interface <if> | --force-server-ip <ip>  | --verbose              ]\n"
+            "[sudo] java NanoDHCP [ --help            | --force-port <n>        | --range <ip1> <ip2> |\n" +
+            "                       --mask <m>        | --sniff-only            | --show-ip           |\n" +
+            "                       --gateway <ip>    | --dns <ip>              | --lease-time <sec>  |\n" +
+            "                       --interface <if>  | --force-server-ip <ip>  | --pxe <ip> <file>   |\n" +
+            "                       --verbose         |                                                 ]\n"
 
         );
 
@@ -255,6 +285,8 @@ public class Args {
         "\tdns            : " + IP.intArrToIP(dns) + "\n" +
         "\tserver (local) : " + serverIP + "\n" +
         "\tinterface      : " + targetInterface + "\n" +
+        "\tpxe server     : " + (servPxe != null ? servPxe : "disabled") + "\n" +
+        "\tpxe file       : " + (filePxe != null ? filePxe : "disabled") + "\n" +
 
         "\n[Meta]\n" +
         "\tnetwork config changed : " + networkConfigChanged + "\n"
@@ -271,7 +303,7 @@ public class Args {
             "  --force-port <port>      Bind socket to port (default: 67)\n" +
             "                           Required for real DHCP, otherwise useful for sniffing\n\n" +
             "  --range <ip1> <ip2>      IP pool range (default: 192.168.1.3 - 192.168.1.254)\n\n" +
-            "  --mask <m>               Network mask in CIDR (default: /24)\n\n" +
+            "  --mask <m>               Network mask in CIDR (default: 24)\n\n" +
             "  --gateway <ip>           Gateway IP to assign (default: 192.168.1.1)\n\n" +
             "  --dns <ip>               DNS server IP to assign (default: 1.1.1.1)\n\n" +
             "  --sniff-only             Do not respond, only listen to UDP traffic\n\n" +
@@ -279,6 +311,7 @@ public class Args {
             "  --lease-time <sec>       Time to lease IPs for, in seconds (default: 24h)\n\n" +
             "  --force-server-ip <ip>   Forces packets to use a specific server IP (default: local)\n\n" +
             "  --interface <if>         Uses the server IP of the interface with name <if> (default: first found)\n\n" +
+            "  --pxe <ip> <filename>    Tells PXE boot requests to use \"filename\" at the TFTP server with that ip\n\n" +
             "  --verbose                Enable verbose output\n"
         );
     }

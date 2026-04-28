@@ -34,7 +34,7 @@ public class DHCPPacketBuilder {
 
     private int outgoingMessageType;
 
-    // empty fo rnow
+    // empty for now
     public byte[] serverDomainNameBytes = new byte[64];
     public String serverDomainName;
     public byte[] bootFileNameBytes = new byte[128];
@@ -53,12 +53,23 @@ public class DHCPPacketBuilder {
         this.secsSinceClientBoot = dec.secsSinceClientBoot;
         this.flags               = dec.flags;
         this.clientMAC           = dec.clientMAC;
+        this.bootFileName        = dec.filePxe;
 
         this.outgoingMessageType = outgoingMessageType;
 
         this.assignedIP = IP.parseIP(lease.ipAddress);
 
         this.serverIP = IP.parseIP(opt.serverIP);
+
+
+        // fill bytes if pxe enabled
+        if (dec.servPxe != null) {
+            byte[] fileBytes = dec.filePxe.getBytes(StandardCharsets.US_ASCII);
+            int lengthToCopy = Math.min(fileBytes.length, 127);
+            System.arraycopy(dec.filePxe.getBytes(StandardCharsets.US_ASCII), 0, bootFileNameBytes, 0, 127); 
+
+            System.arraycopy(dec.servPxeIP, 0, serverIP, 0, 4); 
+        }
     }
 
     public byte[] build() {

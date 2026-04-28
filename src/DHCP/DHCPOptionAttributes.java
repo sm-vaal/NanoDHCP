@@ -45,6 +45,11 @@ public final class DHCPOptionAttributes {
 
         // ...
 
+        attributes.put(66, new FieldAttributes("PXE: TFTP server name", 1, true));
+        attributes.put(67, new FieldAttributes("PXE: boot file name", 1, true));
+
+        // ...
+
         attributes.put(255, new FieldAttributes("End of packet",   1, false ));
 
         // === HANDLERS ===
@@ -53,6 +58,8 @@ public final class DHCPOptionAttributes {
         handlers.put(6,  new DNSHandler_6());
         handlers.put(51, new LeaseTimeHandler_51());
         handlers.put(54, new ServerIdHandler_54());
+        handlers.put(66, new TFTPServerNamePXE_66());
+        handlers.put(67, new BootFIleNamePXE_67());
 
 
         Log.log(Log.LOG_INFO, "Field attribute and handler tables successfully filled");

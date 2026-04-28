@@ -46,7 +46,16 @@ public class NanoDHCP {
         try {
             socket.setBroadcast(true);
         } catch (SocketException e) {
-            Log.log(Log.LOG_ERROR, "Log setting broadcast: " + e.getMessage());
+            Log.log(Log.LOG_ERROR, "Error setting broadcast: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+        // To reuse a port in different IPs, when running in a system with
+        // multiple interfaces
+        try {
+            socket.setReuseAddress(true);
+        } catch (SocketException e) {
+            Log.log(Log.LOG_ERROR, "Error setting reuse address: " + e.getMessage());
             throw new RuntimeException(e);
         }
 
