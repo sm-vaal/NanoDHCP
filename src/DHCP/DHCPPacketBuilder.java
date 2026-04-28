@@ -7,6 +7,7 @@ import java.nio.ByteBuffer;
 import Common.*;
 import DHCP.*;
 import DHCP.lease.*;
+import java.nio.charset.StandardCharsets;
 
 public class DHCPPacketBuilder {
 
@@ -53,7 +54,8 @@ public class DHCPPacketBuilder {
         this.secsSinceClientBoot = dec.secsSinceClientBoot;
         this.flags               = dec.flags;
         this.clientMAC           = dec.clientMAC;
-        this.bootFileName        = dec.filePxe;
+
+        this.bootFileName        = opt.filePxe;
 
         this.outgoingMessageType = outgoingMessageType;
 
@@ -63,12 +65,12 @@ public class DHCPPacketBuilder {
 
 
         // fill bytes if pxe enabled
-        if (dec.servPxe != null) {
-            byte[] fileBytes = dec.filePxe.getBytes(StandardCharsets.US_ASCII);
+        if (opt.servPxe != null) {
+            byte[] fileBytes = opt.filePxe.getBytes(StandardCharsets.US_ASCII);
             int lengthToCopy = Math.min(fileBytes.length, 127);
-            System.arraycopy(dec.filePxe.getBytes(StandardCharsets.US_ASCII), 0, bootFileNameBytes, 0, 127); 
+            System.arraycopy(opt.filePxe.getBytes(StandardCharsets.US_ASCII), 0, bootFileNameBytes, 0, lengthToCopy); 
 
-            System.arraycopy(dec.servPxeIP, 0, serverIP, 0, 4); 
+            System.arraycopy(opt.servPxeIP, 0, serverIP, 0, 4); 
         }
     }
 

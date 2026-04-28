@@ -3,6 +3,7 @@ package DHCP.handlers;
 import Common.*;
 import DHCP.*;
 import DHCP.lease.*;
+import java.nio.charset.StandardCharsets;
 
 public class TFTPServerNamePXE_66 implements OptionHandler {
     public byte[] handle(DecodedDHCP ctx, Lease l, Args servOpt) {

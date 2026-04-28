@@ -59,7 +59,7 @@ public final class DHCPOptionAttributes {
         handlers.put(51, new LeaseTimeHandler_51());
         handlers.put(54, new ServerIdHandler_54());
         handlers.put(66, new TFTPServerNamePXE_66());
-        handlers.put(67, new BootFIleNamePXE_67());
+        handlers.put(67, new BootFileNamePXE_67());
 
 
         Log.log(Log.LOG_INFO, "Field attribute and handler tables successfully filled");

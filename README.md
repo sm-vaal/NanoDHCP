@@ -35,20 +35,21 @@ Windows fights you along the way if you want to run this, it _really_ likes to h
 
 ## The server options
 
-|Option                 |Description                                                              |
-|-----------------------|-------------------------------------------------------------------------|
-|--help                 |Show help (this table)                                                   |
-|--force-port <port>    |Bind socket to port (default: 67). Useful to sniff                       |
-|--range <ip1> <ip2>    |IP pool range (default: 192.168.1.3 - 192.168.1.254)                     |
-|--mask <m>             |Network mask in CIDR (but no slash!!!) (default: /24)                    |
-|--gateway <ip>         |Gateway IP to assign (default: 192.168.1.1)                              |
-|--dns <ip>             |DNS server IP to assign (default: 1.1.1.1)                               |
-|--sniff-only           |Do not respond, only listen to UDP traffic                               |
-|--show-ip              |Print all valid IPs for current configuration                            |
-|--lease-time <sec>     |Time to lease IPs for, in seconds (default: 24h)                         |
-|--force-server-ip <ip> |Forces packets to use a specific server IP (default: local)              |
-|--interface <if>       |Uses the server IP of the interface with name <if> (default: first found)|
-|--verbose              |Enable verbose output                                                    |
+|Option                 |Description                                                               |
+|-----------------------|--------------------------------------------------------------------------|
+|--help                 |Show help (this table)                                                    |
+|--force-port <port>    |Bind socket to port (default: 67). Useful to sniff                        |
+|--range <ip1> <ip2>    |IP pool range (default: 192.168.1.3 - 192.168.1.254)                      |
+|--mask <m>             |Network mask in CIDR (but no slash!!!) (default: /24)                     |
+|--gateway <ip>         |Gateway IP to assign (default: 192.168.1.1)                               |
+|--dns <ip>             |DNS server IP to assign (default: 1.1.1.1)                                |
+|--sniff-only           |Do not respond, only listen to UDP traffic                                |
+|--show-ip              |Print all valid IPs for current configuration                             |
+|--lease-time <sec>     |Time to lease IPs for, in seconds (default: 24h)                          |
+|--force-server-ip <ip> |Forces packets to use a specific server IP (default: local)               |
+|--interface <if>       |Uses the server IP of the interface with name <if> (default: first found) |
+|--pxe <ip> <filename>  |Tells PXE boot requests to use "filename" at the TFTP server with that ip |
+|--verbose              |Enable verbose output                                                     |
 
 
 ## The usage examples
