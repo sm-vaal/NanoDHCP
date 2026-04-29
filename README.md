@@ -9,6 +9,7 @@ NanoDHCP is a minimal, cross-platform, and easy to configure DHCPv4 server that 
 - CLI configuration only
 - Cross-platform (JVM-based)
 - Verbose debugging mode (cool for learning too!)
+- Basic PXE boot support (still needs an external TFTP server)
 
 ## The why
 Sometimes you need a quick, simple way to configure IPs and gateways, nothing else. ISC-DHCP can be overkill for those cases, so why not use a simpler program instead? 
