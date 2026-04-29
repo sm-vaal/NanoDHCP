@@ -35,21 +35,22 @@ Windows fights you along the way if you want to run this, it _really_ likes to h
 
 ## The server options
 
-|Option                 |Description                                                               |
-|-----------------------|--------------------------------------------------------------------------|
-|--help                 |Show help (this table)                                                    |
-|--force-port <port>    |Bind socket to port (default: 67). Useful to sniff                        |
-|--range <ip1> <ip2>    |IP pool range (default: 192.168.1.3 - 192.168.1.254)                      |
-|--mask <m>             |Network mask in CIDR (but no slash!!!) (default: /24)                     |
-|--gateway <ip>         |Gateway IP to assign (default: 192.168.1.1)                               |
-|--dns <ip>             |DNS server IP to assign (default: 1.1.1.1)                                |
-|--sniff-only           |Do not respond, only listen to UDP traffic                                |
-|--show-ip              |Print all valid IPs for current configuration                             |
-|--lease-time <sec>     |Time to lease IPs for, in seconds (default: 24h)                          |
-|--force-server-ip <ip> |Forces packets to use a specific server IP (default: local)               |
-|--interface <if>       |Uses the server IP of the interface with name <if> (default: first found) |
-|--pxe <ip> <filename>  |Tells PXE boot requests to use "filename" at the TFTP server with that ip |
-|--verbose              |Enable verbose output                                                     |
+|Option                 |Description                                                                     |
+|-----------------------|--------------------------------------------------------------------------------|
+|--help                 |Show help (this table)                                                          |
+|--force-port <port>    |Bind socket to port (default: 67). Useful to sniff                              |
+|--range <ip1> <ip2>    |IP pool range (default: 192.168.1.3 - 192.168.1.254)                            |
+|--mask <m>             |Network mask in CIDR (but no slash!!!) (default: /24)                           |
+|--gateway <ip>         |Gateway IP to assign (default: 192.168.1.1)                                     |
+|--dns <ip>             |DNS server IP to assign (default: 1.1.1.1)                                      |
+|--sniff-only           |Do not respond, only listen to UDP traffic                                      |
+|--show-ip              |Print all valid IPs for current configuration                                   |
+|--lease-time <sec>     |Time to lease IPs for, in seconds (default: 24h)                                |
+|--force-server-ip <ip> |Forces packets to use a specific server IP (default: local)                     |
+|--interface <if>       |Uses the server IP of the interface with name <if> (default: first found)       |
+|--pxe <ip> <filename>  |Tells PXE boot requests to use "filename" at the TFTP server with that ip       |
+|--force-broadcast      |Makes the server send replies to 255.255.255.255, not local broadcast (for PXE) |
+|--verbose              |Enable verbose output                                                           |
 
 
 ## The usage examples
@@ -59,8 +60,13 @@ Say, you want to use this in your home network, using Google's DNS, with a lease
 Or, maybe you just want to listen to DHCP requests to sniff around? Do this!
 `sudo java NanoDHCP --sniff-only --verbose`
 
+Just want quick PXE boot? got you covered! assuming your TFTP server is at 192.168.1.2:
+`sudo java NanoDHCP --pxe 192.168.1.2 yourFile.efi`
+
 Maybe this program is like regex, and you forget how to use it every time you need it. then:
 `java NanoDHCP --help`
+
+_NOTE: Replace java NanoDHCP for ./NanoDHCP on Linux, .\\NanoDHCP.exe on Windows._
 
 ## The limitations (of course)
 This server is **NOT meant to replace anything in the real world.** I tried it in my home network and it does work fine, but your mileage may vary, as only the **bare basics** are implemented. 
