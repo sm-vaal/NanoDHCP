@@ -22,6 +22,8 @@ public class Args {
 
     public int leaseTime = 86400; // default 24h
 
+    public boolean forceBroadcast = true;
+
     public String serverIP = IP.getLocalIP();
 
     public String targetInterface;
@@ -200,6 +202,8 @@ public class Args {
                 }
             }
 
+            else if (arg.equals("--force-broadcast")) forceBroadcast = true;
+
             else if (arg.equals("--verbose"))     verbose       = true;
 
             // if the argument is invalid
@@ -256,7 +260,7 @@ public class Args {
             "                       --mask <m>        | --sniff-only            | --show-ip           |\n" +
             "                       --gateway <ip>    | --dns <ip>              | --lease-time <sec>  |\n" +
             "                       --interface <if>  | --force-server-ip <ip>  | --pxe <ip> <file>   |\n" +
-            "                       --verbose         |                                                 ]\n"
+            "                       --force-broadcast | --verbose               |                      ]\n"
 
         );
 
@@ -287,6 +291,7 @@ public class Args {
         "\tinterface      : " + targetInterface + "\n" +
         "\tpxe server     : " + (servPxe != null ? servPxe : "disabled") + "\n" +
         "\tpxe file       : " + (filePxe != null ? filePxe : "disabled") + "\n" +
+        "\tbroadcast      : " + forceBroadcast + "\n" +
 
         "\n[Meta]\n" +
         "\tnetwork config changed : " + networkConfigChanged + "\n"
@@ -312,6 +317,7 @@ public class Args {
             "  --force-server-ip <ip>   Forces packets to use a specific server IP (default: local)\n\n" +
             "  --interface <if>         Uses the server IP of the interface with name <if> (default: first found)\n\n" +
             "  --pxe <ip> <filename>    Tells PXE boot requests to use \"filename\" at the TFTP server with that ip\n\n" +
+            "  --force-broadcast        Makes the server send replies to 255.255.255.255 instead of local network broadcast (may be needed for PXE)\n\n" +
             "  --verbose                Enable verbose output\n"
         );
     }

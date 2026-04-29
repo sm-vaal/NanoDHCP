@@ -46,11 +46,12 @@ public class DHCP {
                               (broadcastInt & 0xFF);
 
         try {
-            broadcast = InetAddress.getByName(broadcastStr); 
+            if (opt.forceBroadcast) broadcast = InetAddress.getByName("255.255.255.255"); 
+            else broadcast = InetAddress.getByName(broadcastStr); 
             Log.log(Log.LOG_INFO, "Calculated broadcast address: " + broadcastStr);
         } catch (UnknownHostException e) {
             e.printStackTrace();
-            Log.log(Log.LOG_ERROR, "couldn't find broadcast. WTF?");
+            Log.log(Log.LOG_ERROR, "couldn't find broadcast address? weird.");
         }
 
         Log.log(Log.LOG_INFO, "DHCP server created");
