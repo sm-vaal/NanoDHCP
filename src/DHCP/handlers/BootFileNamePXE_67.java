@@ -10,7 +10,7 @@ public class BootFileNamePXE_67 implements OptionHandler {
         // null terminator for file string, just in case
         // some servers break without it
 
-        byte[] stringBytes = (servOpt.filePxe + "\0").getBytes(StandardCharsets.US_ASCII);
+        byte[] stringBytes = (servOpt.filePxe).getBytes(StandardCharsets.US_ASCII);
         byte[] option = new byte[2 + stringBytes.length];
     
         option[0] = 67;

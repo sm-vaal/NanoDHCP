@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 
 public class VendorClassID_60 implements OptionHandler {
 
-    private String pxeEnabled = "PXEClient\0";
+    private String pxeEnabled = "PXEClient";
 
     public byte[] handle(DecodedDHCP ctx, Lease l, Args servOpt) {
 

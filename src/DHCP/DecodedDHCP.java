@@ -50,6 +50,7 @@ public class DecodedDHCP {
 
     public boolean isValid = false;
 
+    public byte[]  clientID;
 
     public DecodedDHCP(byte[] msg) {
         rawPacket   = msg; // rawPacket depends on msg lifetime, important
@@ -158,6 +159,13 @@ public class DecodedDHCP {
                 wasIPRequested = true;
                 for (int j = 0; j < length; j++) {
                     requestedIP[j] = Byte.toUnsignedInt(rawPacket[i + 2 + j]);
+                }
+            }
+
+            if (tag == 61) {                        // needed for PXE
+                clientID = new byte[length];
+                for (int j = 0; j < length; j++) {
+                    clientID[j] = rawPacket[i + 2 + j];
                 }
             }
 
