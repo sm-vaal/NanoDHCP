@@ -80,7 +80,7 @@ public class LeaseManager {
                 continue;
             }
 
-            l = activeLeasesIP.get(validIPs[currentIPIndex]);
+            l = activeLeasesIP.get(validIPs[currentIPIndex]); 
 
             if (l == null) { // if null, never assigned
                 assigned = true;
@@ -122,7 +122,7 @@ public class LeaseManager {
         return newLease;
     }
 
-    public Lease assignToLease(String ip, String macAddress, int timeSeconds, int transID) {
+    public Lease assignToLease(String ip, String macAddress, int timeSeconds, int transID, Lease.LeaseState state) {
         if (ip == null) return null;
 
         Lease newLease = new Lease(ip, macAddress, Lease.LeaseState.OFFERED,

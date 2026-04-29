@@ -38,11 +38,19 @@ public class DHCP {
 
         lm = new LeaseManager(opt.ipStart, opt.ipEnd, opt.netmask);
 
+        int broadcastInt = (startIP & mask) | ~mask;
+
+        String broadcastStr = ((broadcastInt >>> 24) & 0xFF) + "." +
+                              ((broadcastInt >>> 16) & 0xFF) + "." +
+                              ((broadcastInt >>> 8)  & 0xFF) + "." +
+                              (broadcastInt & 0xFF);
+
         try {
-            broadcast  = InetAddress.getByName("192.168.1.255");
+            broadcast = InetAddress.getByName(broadcastStr); 
+            Log.log(Log.LOG_INFO, "Calculated broadcast address: " + broadcastStr);
         } catch (UnknownHostException e) {
             e.printStackTrace();
-             Log.log(Log.LOG_ERROR, "couldn't find broadcast. WTF?");
+            Log.log(Log.LOG_ERROR, "couldn't find broadcast. WTF?");
         }
 
         Log.log(Log.LOG_INFO, "DHCP server created");
@@ -97,13 +105,13 @@ public class DHCP {
                 }
 
                 // ensure we can assign: is this IP available?
-                if (assignedLease == null) {
-                    // if never assigned, assign
-                    assignedLease = lm.assignToLease(IP.intArrToIP(reqIP), rcvPkt.macToString(), opt.leaseTime, rcvPkt.transactionID);
+                if (assignedLease == null) {  
+                    // if never assigned, assign 
+                    assignedLease = lm.assignToLease(IP.intArrToIP(reqIP), rcvPkt.macToString(), opt.leaseTime, rcvPkt.transactionID, Lease.LeaseState.BOUND);
                 } else {
                     // if it has ever been assigned, only valid if available
                     if (assignedLease.isAvailable(rcvPkt.macToString())) {
-                        assignedLease = lm.assignToLease(IP.intArrToIP(reqIP), rcvPkt.macToString(), opt.leaseTime, rcvPkt.transactionID);
+                        assignedLease = lm.assignToLease(IP.intArrToIP(reqIP), rcvPkt.macToString(), opt.leaseTime, rcvPkt.transactionID, Lease.LeaseState.BOUND);
                     } else {
                         Log.log(Log.LOG_INFO, "DHCPREQUEST by " + rcvPkt.macToString() +
                                 " rejected: IP " + IP.intArrToIP(reqIP) + " not available");
