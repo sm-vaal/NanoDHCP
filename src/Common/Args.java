@@ -22,7 +22,7 @@ public class Args {
 
     public int leaseTime = 86400; // default 24h
 
-    public boolean forceBroadcast = true;
+    public boolean forceBroadcast = false;
 
     public String serverIP = IP.getLocalIP();
 

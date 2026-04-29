@@ -48,7 +48,7 @@ public class DHCP {
         try {
             if (opt.forceBroadcast) broadcast = InetAddress.getByName("255.255.255.255"); 
             else broadcast = InetAddress.getByName(broadcastStr); 
-            Log.log(Log.LOG_INFO, "Calculated broadcast address: " + broadcastStr);
+            Log.log(Log.LOG_INFO, "Calculated broadcast address: " + broadcast);
         } catch (UnknownHostException e) {
             e.printStackTrace();
             Log.log(Log.LOG_ERROR, "couldn't find broadcast address? weird.");
