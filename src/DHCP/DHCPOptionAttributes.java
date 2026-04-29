@@ -58,7 +58,7 @@ public final class DHCPOptionAttributes {
         handlers.put(6,  new DNSHandler_6());
         handlers.put(51, new LeaseTimeHandler_51());
         handlers.put(54, new ServerIdHandler_54());
-        handlers.put(60, new VendorClassID_60());
+        // handlers.put(60, new VendorClassID_60()); // it's... complicated. hard to properly implement, better unused
         handlers.put(61, new ClientID_61());
         handlers.put(66, new TFTPServerNamePXE_66());
         handlers.put(67, new BootFileNamePXE_67());

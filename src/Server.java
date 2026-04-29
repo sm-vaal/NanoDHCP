@@ -70,6 +70,10 @@ public class Server {
                 socket.send(response);
             } catch (IOException e) {
                 Log.log(Log.LOG_ERROR, "Error while sending response: " + e.getMessage());
+                if (opt.forceBroadcast) {
+                    Log.log(Log.LOG_ERROR, "Maybe check your routes? set a default route (255.255.255.255/32) to your desired interface (" 
+                            + opt.targetInterface + ")" + e.getMessage());
+                }
             }
 
         }
