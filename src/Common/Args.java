@@ -167,7 +167,7 @@ public class Args {
             }
 
             else if (arg.equals("--interface")) {
-                arg = requireArg(arguments, i, "--force-server-ip");
+                arg = requireArg(arguments, i, "--interface");
                 if (arg == null) break;
                 else {
                     targetInterface = arg;

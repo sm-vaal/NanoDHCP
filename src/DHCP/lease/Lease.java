@@ -46,4 +46,8 @@ public class Lease {
         return mac != null && mac.equals(this.macAddress);
     }
 
+    public void setExpirationIn(int secondsToExpire) {
+        expirationTimeEpoch = System.currentTimeMillis() + secondsToExpire * 1000L;
+    }
+
 }

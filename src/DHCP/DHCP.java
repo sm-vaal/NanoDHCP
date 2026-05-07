@@ -63,8 +63,19 @@ public class DHCP {
 
         switch (rcvPkt.messageType) {
             case DecodedDHCP.DHCPDISCOVER: {
-                // server holds offer for 16 seconds
-                Lease leaseToAssign = lm.assignToFirstLease(rcvPkt.macToString(), 16, rcvPkt.transactionID);
+                // try to offer previously assigned ip
+                Lease leaseToAssign = lm.getLeaseByMac(rcvPkt.macToString()); 
+                
+                if (leaseToAssign == null) {
+                    // if not found by mac, "new" interface, so another lease
+                    leaseToAssign = lm.assignToFirstLease(rcvPkt.macToString(), 16, rcvPkt.transactionID);
+                } else {
+                    // otherwise, renew the lease for offer
+                    leaseToAssign.setExpirationIn(16);
+                    leaseToAssign.leaseState = Lease.LeaseState.OFFERED;
+                    leaseToAssign.transactionId = rcvPkt.transactionID;
+                }
+                
                 if (leaseToAssign == null) {
                     Log.log(Log.LOG_WARNING, "No lease could be offered to " + rcvPkt.macToString());
                     return null;

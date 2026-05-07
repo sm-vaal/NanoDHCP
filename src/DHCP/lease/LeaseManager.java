@@ -110,6 +110,13 @@ public class LeaseManager {
         String ip = findFirstIPAvailable();
         if (ip == null) return null;
 
+        // cleanup if ip belonged to someone
+        Lease oldLease = activeLeasesIP.get(ip);
+        if (oldLease != null && !oldLease.macAddress.equals(macAddress)) {
+            activeLeasesMac.remove(oldLease.macAddress);
+            Log.log(Log.LOG_INFO, "Cleaned up stale MAC mapping for " + oldLease.macAddress);
+        }
+
         Lease newLease = new Lease(ip, macAddress, Lease.LeaseState.OFFERED,
                                    timeSeconds, transID);
 
@@ -124,6 +131,13 @@ public class LeaseManager {
 
     public Lease assignToLease(String ip, String macAddress, int timeSeconds, int transID, Lease.LeaseState state) {
         if (ip == null) return null;
+
+        // cleanup if ip belonged to someone
+        Lease oldLease = activeLeasesIP.get(ip);
+        if (oldLease != null && !oldLease.macAddress.equals(macAddress)) {
+            activeLeasesMac.remove(oldLease.macAddress);
+            Log.log(Log.LOG_INFO, "Cleaned up stale MAC mapping for " + oldLease.macAddress);
+        }
 
         Lease newLease = new Lease(ip, macAddress, Lease.LeaseState.OFFERED,
                                    timeSeconds, transID);
